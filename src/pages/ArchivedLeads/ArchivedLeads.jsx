@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import {
     getArchivedLeads,
-    getLeadById
+    getLeadById,
+    restoreLead
 } from "../../services/lead.service";
 
 import LeadsTable from "../../components/leads/LeadsTable";
@@ -32,6 +33,32 @@ const ArchivedLeads = () => {
 
     }
 
+    async function handleRestore(id) {
+
+    if (!window.confirm("Restore this lead?")) {
+
+        return;
+
+    }
+
+    try {
+
+        await restoreLead(id);
+
+        loadLeads();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+    
+
     async function openLead(id) {
 
         const response = await getLeadById(id);
@@ -41,6 +68,7 @@ const ArchivedLeads = () => {
         setDrawerOpen(true);
 
     }
+
 
     useEffect(() => {
 
@@ -82,16 +110,15 @@ const ArchivedLeads = () => {
 
             <LeadsTable
 
-                leads={leads}
+    leads={leads}
 
-                onView={openLead}
+    onView={openLead}
 
-                
+    archived={true}
 
-            />
-            <p className="text-red-600 font-bold">
-    Leads Count: {leads.length}
-</p>
+    onRestore={handleRestore}
+
+/>
 
             <LeadDrawer
 

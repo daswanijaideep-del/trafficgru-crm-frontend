@@ -1,6 +1,18 @@
-const LeadsTable = ({ leads, onView }) => {
+const LeadsTable = ({
+
+    leads,
+    onView,
+    archived = false,
+    onRestore
+}) => {
+    console.log({
+    archived,
+    onRestore,
+    leads
+});
 
     return (
+        
 
         <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
 
@@ -157,21 +169,35 @@ const LeadsTable = ({ leads, onView }) => {
 
                                     </td>
 
-                                    <td className="px-6 py-4 text-center">
+                                    <td className="p-4 text-center">
 
-                                        <button
+    <div className="flex justify-center gap-2">
 
-                                            onClick={() => onView(lead._id)}
+        <button
+            onClick={() => onView(lead._id)}
+            className="rounded bg-black px-4 py-2 text-white"
+        >
+            View
+        </button>
 
-                                            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-100 transition"
+        {
 
-                                        >
+            archived && (
 
-                                            View
+                <button
+                    onClick={() => onRestore(lead._id)}
+                    className="rounded bg-green-600 px-4 py-2 text-white"
+                >
+                    Restore
+                </button>
 
-                                        </button>
+            )
 
-                                    </td>
+        }
+
+    </div>
+
+</td>
 
                                 </tr>
 
