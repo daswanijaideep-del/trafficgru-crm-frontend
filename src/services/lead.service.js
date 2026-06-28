@@ -36,3 +36,32 @@ export async function updateLead(id, data) {
     return response.data;
 
 }
+
+export async function getArchivedLeads({
+    page = 1,
+    search = ""
+}) {
+
+    const response = await api.get(
+        "/admin/leads/archived",
+        {
+            params: {
+                page,
+                search
+            }
+        }
+    );
+
+    return response.data;
+
+}
+
+export async function restoreLead(id) {
+
+    const response = await api.patch(
+        `/admin/leads/${id}/restore`
+    );
+
+    return response.data;
+
+}
